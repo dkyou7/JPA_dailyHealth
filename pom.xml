@@ -108,6 +108,13 @@
             <version>2.4</version>
         </dependency>
 
+        <!-- 재실행 없이 프론트를 재기동 시키기 위한 메이븐 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+
+
 
     </dependencies>
 

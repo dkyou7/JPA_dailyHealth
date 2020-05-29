@@ -24,7 +24,7 @@ public class UserRepository {
                 .getResultList();
     }
     public List<User> findByCardNumber(int cardNum){
-        return em.createQuery("select u from Member u where u.cardNum = :cardNum",User.class)
+        return em.createQuery("select u from User u where u.cardNum = :cardNum",User.class)
                 .setParameter("cardNum",cardNum)
                 .getResultList();
     }

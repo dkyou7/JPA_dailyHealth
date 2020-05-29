@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>작성자</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>최초작성시간</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="board : ${boards}">
+                <td th:text="${board.id}"></td>
+                <td th:text="${board.writer}"></td>
+                <td th:text="${board.title}"></td>
+                <td th:text="${board.content}"></td>
+                <td>
+                    <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                </td>
+                <td>
+                    <a href="#" th:href="@{/board/{id}/edit (id=${board.id})}" class="btn btn-primary" role="button">수정</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="fragments/footer :: footer"/>
+</div>
+</body>
+</html>

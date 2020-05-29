@@ -24,4 +24,7 @@ public class User {
     private Float height;
 
     private int cardNum;        // 스포짐 카드 번호
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;  // 유저가 어떤 권한을 가지고 있는지
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<style>
+    .fieldError{
+        border-color: #bd2130;
+     }
+</style>
+<body>
+    <div class="container">
+        <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+        <form role="form" action="/board/new" th:object="${boardForm}" method="post">
+            <div class="form-group">
+                <label th:for="name">글쓴이</label>
+                <input type="text" th:field="*{writer}" class="form-control" placeholder="글쓴이를 입력하세요."
+                    th:class="${#fields.hasErrors('writer')}? 'form-control fieldError' : 'form-control'">
+                <p th:if="${#fields.hasErrors('writer')}" th:errors="*{writer}">Incorrect date</p>
+            </div>
+            <div class="form-group">
+                <label th:for="title">제목</label>
+                <input class="form-control" placeholder="제목을 입력하세요." th:field="*{title}" type="text">
+            </div>
+            <div class="form-group">
+                <label th:for="content">내용</label>
+                <textarea class="form-control" placeholder="일지를 입력하세요." th:field="*{content}"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <br/>
+        <div th:replace="fragments/footer :: footer"></div>
+    </div>
+</body>
+</html>

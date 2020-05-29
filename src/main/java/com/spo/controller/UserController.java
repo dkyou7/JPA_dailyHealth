@@ -1,6 +1,7 @@
 package com.spo.controller;
 
 import com.spo.domain.User;
+import com.spo.domain.UserStatus;
 import com.spo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ public class UserController {
         user.setCardNum(form.getCardNum());
         user.setHeight(form.getHeight());
         user.setWeight(form.getWeight());
+        user.setUserStatus(UserStatus.일반회원);
 
         userService.join(user);
 
