@@ -3,7 +3,6 @@ package com.spo.service;
 import com.spo.domain.Board;
 import com.spo.repository.BoardRepository;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,7 +10,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class BoardService {
+public class BoardService{
     private BoardRepository boardRepository;
 
     @Transactional
@@ -25,6 +24,10 @@ public class BoardService {
         new_board.updateBoard(board.getTitle(),board.getContent());
         return new_board.getId();
      }
+    @Transactional
+    public void deletePost(Long id) {
+        boardRepository.deleteById(id);
+    }
 
     public List<Board> findPosts(){
         return boardRepository.findAll();

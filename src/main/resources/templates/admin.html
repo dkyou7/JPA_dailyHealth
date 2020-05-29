@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"></head>
 <body>
 <div class="container">
@@ -16,14 +16,6 @@
             <a class="btn btn-lg btn-dark" href="/board/new">일지 쓰기</a>
             <a class="btn btn-lg btn-dark" href="/boards">일지 목록</a>
         </p>
-        <p>
-            <a class="btn btn-lg btn-info" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
-            <a class="btn btn-lg btn-info" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
-            <a class="btn btn-lg btn-info" sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
-            <a class="btn btn-lg btn-info" sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/user/info}">내정보</a>
-            <a class="btn btn-lg btn-info" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">어드민</a>
-        </p>
-
     </div>
     <div th:replace="fragments/footer :: footer"></div>
 </div> <!-- /container -->

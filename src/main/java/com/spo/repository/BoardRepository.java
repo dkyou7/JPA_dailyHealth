@@ -26,9 +26,8 @@ public class BoardRepository {
         return em.createQuery("select b from Board b", Board.class)
                 .getResultList();
     }
-    public List<Board> findByCardNumber(int cardNum){
-        return em.createQuery("select u from Board u where u.cardNum = :cardNum",Board.class)
-                .setParameter("cardNum",cardNum)
-                .getResultList();
+    public void deleteById(Long id){
+        em.createQuery("delete b from Board b where b.id = :id",Board.class)
+                .setParameter("id",id);
     }
 }

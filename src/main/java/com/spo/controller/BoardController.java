@@ -7,10 +7,7 @@ import lombok.Builder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -72,6 +69,13 @@ public class BoardController {
         }
         Board board = form.toEntity();
         boardService.updatePost(board);
+
+        return "redirect:/";
+    }
+
+    @DeleteMapping(value = "/board/{id}")
+    public String delete(@PathVariable("boardId") Long id) {
+        boardService.deletePost(id);
 
         return "redirect:/";
     }
