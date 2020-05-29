@@ -10,24 +10,20 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>작성자</th>
                 <th>제목</th>
-                <th>내용</th>
                 <th>최초작성시간</th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="board : ${boards}">
                 <td th:text="${board.id}"></td>
-                <td th:text="${board.writer}"></td>
-                <td th:text="${board.title}"></td>
-                <td th:text="${board.content}"></td>
                 <td>
-                    <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                    <a th:href="@{'/board/' + ${board.id}}">
+                        <span th:text="${board.title}"></span>
+                    </a>
                 </td>
                 <td>
-                    <a href="#" th:href="@{/board/{id}/edit (id=${board.id})}" class="btn btn-primary" role="button">수정</a>
+                    <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
                 </td>
             </tr>
             </tbody>

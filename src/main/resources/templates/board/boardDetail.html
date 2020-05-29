@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+        <div class="jumbotron">
+            <h1>[[${#temporals.format(findBoard.createdDate, 'yyyy-MM-dd HH:mm')}]]</h1>
+            <p class="lead"><h2 th:text="${findBoard.title}"></h2></p>
+            <p th:text="${findBoard.content}"></p>
+
+            <!-- 수정/삭제 -->
+            <div>
+                <p>
+                    <a class="btn btn-lg btn-info" th:href="@{'/board/edit/' + ${findBoard.id}}">
+                        수정
+                    </a>
+                    <a class="btn btn-lg btn-info" th:href="@{'/board/delete/' + ${findBoard.id}}">
+                        삭제
+                    </a>
+                </p>
+            </div>
+        </div>
+    <div th:replace="fragments/footer :: footer"></div>
+</div> <!-- /container -->
+</body>
+</html>
