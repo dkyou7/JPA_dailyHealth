@@ -1,7 +1,6 @@
 package com.spo.controller;
 
 import com.spo.domain.User;
-import com.spo.domain.UserStatus;
 import com.spo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,19 +25,10 @@ public class UserController {
 
     @PostMapping(value = "/users/new")
     public String create(@Valid UserForm form, BindingResult result){
-
         if(result.hasErrors()){
             return "users/createUserForm";
         }
-
-        User user = new User();
-        user.setName(form.getName());
-        user.setAge(form.getAge());
-        user.setCardNum(form.getCardNum());
-        user.setHeight(form.getHeight());
-        user.setWeight(form.getWeight());
-        user.setUserStatus(UserStatus.일반회원);
-
+        User user = form.toEntity();    // DTO를 엔티티 형식에 맞추어 변경
         userService.join(user);
 
         return "redirect:/";

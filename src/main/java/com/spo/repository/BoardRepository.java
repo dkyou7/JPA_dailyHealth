@@ -27,7 +27,6 @@ public class BoardRepository {
                 .getResultList();
     }
     public void deleteById(Long id){
-        em.createQuery("delete b from Board b where b.id = :id",Board.class)
-                .setParameter("id",id);
+        em.remove(id);
     }
 }

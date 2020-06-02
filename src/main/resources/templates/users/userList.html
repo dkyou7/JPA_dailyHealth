@@ -10,6 +10,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>아이디</th>
                     <th>이름</th>
                     <th>나이</th>
                     <th>신장</th>
@@ -20,6 +21,7 @@
                 <tbody>
                 <tr th:each="member : ${users}">
                     <td th:text="${member.id}"></td>
+                    <td th:text="${member.email}"></td>
                     <td th:text="${member.name}"></td>
                     <td th:text="${member.age}"></td>
                     <td th:text="${member.height}"></td>

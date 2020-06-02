@@ -3,7 +3,6 @@ package com.spo.controller;
 import com.spo.domain.Board;
 import com.spo.service.BoardService;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,8 +24,9 @@ public class BoardController {
 
     @PostMapping("/board/new")
     public String create(@Valid BoardForm form, BindingResult result) {
+        System.out.println("여기까지왔나?");
         if(result.hasErrors()){
-            return "users/createUserForm";
+            return "board/createBoardForm";
         }
         Board board = form.toEntity();
         boardService.savePost(board);

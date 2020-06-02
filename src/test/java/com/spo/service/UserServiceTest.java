@@ -25,8 +25,8 @@ public class UserServiceTest {
     @Test
     @Rollback(false)
     public void join() {
-        User user = new User();
-        user.setName("test");
+        User user = User.builder()
+                .name("test").build();
 
         Long savedId = userService.join(user);
 
@@ -38,11 +38,11 @@ public class UserServiceTest {
     @Test(expected = IllegalStateException.class)
     public void duplicateError(){
 
-        User member1 = new User();
-        member1.setName("test");
+        User member1 = User.builder()
+                .name("test").build();
 
-        User member2 = new User();
-        member2.setName("test");
+        User member2 = User.builder()
+                .name("test").build();
 
         userService.join(member1);
         userService.join(member2);
