@@ -38,6 +38,10 @@ public class User extends BaseTimeEntity{
 
     private Role role;
 
+    // 리스트는 변수랑 매핑
+    @OneToMany(mappedBy = "user")
+    private List<Board> boards = new ArrayList<>();
+
     @Builder
     public User(Long id, String email, String password, String name,
                 Float weight, int age, Float height, int cardNum) {

@@ -1,6 +1,7 @@
 package com.spo.controller;
 
 import com.spo.domain.Board;
+import com.spo.domain.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -11,28 +12,28 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BoardForm {
     private Long id;
-    private String writer;
     private String title;
     private String content;
+    private User user;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
     public Board toEntity(){
         Board board = Board.builder()
                 .id(id)
-                .writer(writer)
                 .title(title)
                 .content(content)
+                .user(user)
                 .build();
         return board;
     }
 
     @Builder
-    public BoardForm(Long id, String title, String content, String writer, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public BoardForm(Long id, String title, String content, User user, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
-        this.writer = writer;
         this.title = title;
         this.content = content;
+        this.user = user;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }

@@ -15,9 +15,12 @@
                     <a class="btn btn-lg btn-info" th:href="@{'/board/edit/' + ${findBoard.id}}">
                         수정
                     </a>
-                    <a class="btn btn-lg btn-info" th:href="@{'/board/delete/' + ${findBoard.id}}">
-                        삭제
-                    </a>
+                    <form id="delete-form" th:action="@{'/board/delete/' + ${findBoard.id}}" method="post">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button class="btn btn-lg btn-info">
+                            삭제
+                        </button>
+                    </form>
                 </p>
             </div>
         </div>

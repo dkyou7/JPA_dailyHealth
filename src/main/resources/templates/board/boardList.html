@@ -11,6 +11,7 @@
             <tr>
                 <th>#</th>
                 <th>제목</th>
+                <th>글쓴이</th>
                 <th>최초작성시간</th>
             </tr>
             </thead>
@@ -22,6 +23,7 @@
                         <span th:text="${board.title}"></span>
                     </a>
                 </td>
+                <td th:text="${board.user?.name}" disabled></td>
                 <td>
                     <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
                 </td>

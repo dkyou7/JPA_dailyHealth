@@ -2,6 +2,7 @@ package com.spo.controller;
 
 import com.spo.domain.Board;
 import com.spo.service.BoardService;
+import com.spo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +15,9 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 public class BoardController {
-    private BoardService boardService;
+    private final BoardService boardService;
 
+    private final UserService userService;
     @GetMapping("/board/new")
     public String createForm(Model model){
         model.addAttribute("boardForm",new BoardForm());
@@ -24,11 +26,11 @@ public class BoardController {
 
     @PostMapping("/board/new")
     public String create(@Valid BoardForm form, BindingResult result) {
-        System.out.println("여기까지왔나?");
         if(result.hasErrors()){
             return "board/createBoardForm";
         }
         Board board = form.toEntity();
+        board.setUser(userService.findUsers().get(0));
         boardService.savePost(board);
 
         return "redirect:/";
@@ -54,7 +56,7 @@ public class BoardController {
 
         BoardForm form = BoardForm.builder()
                 .id(findBoard.getId())
-                .writer(findBoard.getWriter())
+                .user(findBoard.getUser())
                 .title(findBoard.getTitle())
                 .content(findBoard.getContent())
                 .build();
@@ -63,18 +65,19 @@ public class BoardController {
     }
 
     @PutMapping(value = "/board/edit/{id}")
-    public String update(@Valid BoardForm form, BindingResult result) {
+    public String update(@PathVariable("id") Long id,BoardForm form, BindingResult result) {
         if (result.hasErrors()) {
             return "board/updateBoardForm";
         }
         Board board = form.toEntity();
-        boardService.updatePost(board);
+        board.setUser(userService.findUsers().get(0));
+        boardService.updatePost(id,board);
 
-        return "redirect:/";
+        return "redirect:/boards";
     }
 
-    @DeleteMapping(value = "/board/{id}")
-    public String delete(@PathVariable("boardId") Long id) {
+    @DeleteMapping(value = "/board/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
         boardService.deletePost(id);
 
         return "redirect:/";
