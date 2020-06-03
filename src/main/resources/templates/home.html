@@ -17,7 +17,7 @@
         </p>
         <p class="diary">일지를 작성해보자.</p>
         <p>
-            <a class="btn btn-lg btn-dark" th:href="@{/board/new}">일지 쓰기</a>
+            <a class="btn btn-lg btn-dark" sec:authorize="isAuthenticated()" th:href="@{/board/new}">일지 쓰기</a>
             <a class="btn btn-lg btn-dark" sec:authorize="hasRole('ROLE_ADMIN')" href="/boards">일지 목록</a>
         </p>
     </div>

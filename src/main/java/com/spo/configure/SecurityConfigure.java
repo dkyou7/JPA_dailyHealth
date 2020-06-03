@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -43,6 +44,7 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {  // WebSec
             .and() // 로그인 설정
                 .formLogin()
                 .loginPage("/users/login")
+                .successHandler(successHandler())
                 .defaultSuccessUrl("/users/login/result")
                 .permitAll()
             .and() // 로그아웃 설정
@@ -62,5 +64,10 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {  // WebSec
     // 비밀번호 암호화를 위해, passwordEncoder를 사용하고 있습니다.
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return new CustomLoginSuccessHandler("/defaultUrl");
     }
 }

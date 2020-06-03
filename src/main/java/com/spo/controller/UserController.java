@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -38,7 +39,9 @@ public class UserController {
 
     // 로그인 페이지
     @GetMapping("/users/login")
-    public String dispLogin(Model model) {
+    public String dispLogin(Model model, HttpServletRequest request) {
+        String referrer = request.getHeader("Referer");
+        request.getSession().setAttribute("prevPage", referrer);
         model.addAttribute("form",new UserLoginForm());
         return "users/login";
     }
