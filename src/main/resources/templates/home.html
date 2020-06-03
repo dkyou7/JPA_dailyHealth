@@ -8,23 +8,18 @@
         <h1>Daily Health</h1>
         <p class="lead">회원 기능입니다.</p>
         <p>
+            <a class="btn btn-lg btn-secondary" sec:authorize="isAnonymous()" th:href="@{/users/login}">로그인</a>
+            <a class="btn btn-lg btn-secondary" sec:authorize="isAuthenticated()" th:href="@{/users/logout}">로그아웃</a>
+            <a class="btn btn-lg btn-secondary" sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/users/info}">내정보</a>
+            <a class="btn btn-lg btn-secondary" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/admin}">어드민</a>
             <a class="btn btn-lg btn-secondary" sec:authorize="isAnonymous()" href="/users/new">회원 가입</a>
-            <a class="btn btn-lg btn-secondary" sec:authorize="isAnonymous()" href="/users">회원 목록</a>
+            <a class="btn btn-lg btn-secondary" sec:authorize="hasRole('ROLE_ADMIN')" href="/users">회원 목록</a>
         </p>
         <p class="diary">일지를 작성해보자.</p>
         <p>
             <a class="btn btn-lg btn-dark" th:href="@{/board/new}">일지 쓰기</a>
-            <a class="btn btn-lg btn-dark" href="/boards">일지 목록</a>
+            <a class="btn btn-lg btn-dark" sec:authorize="hasRole('ROLE_ADMIN')" href="/boards">일지 목록</a>
         </p>
-        <!--
-        <p>
-            <a class="btn btn-lg btn-info" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
-            <a class="btn btn-lg btn-info" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
-            <a class="btn btn-lg btn-info" sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
-            <a class="btn btn-lg btn-info" sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/user/info}">내정보</a>
-            <a class="btn btn-lg btn-info" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">어드민</a>
-        </p>
-        -->
     </div>
     <div th:replace="fragments/footer :: footer"></div>
 </div> <!-- /container -->

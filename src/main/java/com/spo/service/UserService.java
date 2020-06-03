@@ -14,14 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class UserService{
+public class UserService implements UserDetailsService{
 
     private final UserRepository userRepository;
 
@@ -31,34 +29,43 @@ public class UserService{
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        validateDuplicateMember(user);
+        // validateDuplicateMember(user);
         userRepository.save(user);  // DB에 값이 보장이 된다.
         return user.getId();
     }
 
     private void validateDuplicateMember(User user){
-        List<User> findUser = userRepository.findByCardNumber(user.getCardNum());
-        if(!findUser.isEmpty()){
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
-        }
+        User findUser = userRepository.findByCardNum(user.getCardNum()).get();
+        System.out.println("findUser = " + findUser);
     }
 
     public List<User> findUsers(){
         return userRepository.findAll();
     }
 
-    public User findOne(Long userId){
-        return userRepository.findOne(userId);
-    }
-
     @Transactional
     public void update(Long id,String name){
-        User mem = userRepository.findOne(id);
+        User mem = userRepository.findById(id).get();
         mem.setName(name);
     }
 
     @Transactional
     public void delete(Long id){
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
+        User userEntity = userRepository.findByEmail(userEmail).get();
+
+        List<GrantedAuthority> authorities = new ArrayList<>();
+
+        if (("dkyou7@naver.com").equals(userEmail)) {
+            authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
+        } else {
+            authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
+        }
+
+        return new org.springframework.security.core.userdetails.User(userEntity.getEmail(), userEntity.getPassword(), authorities);
     }
 }

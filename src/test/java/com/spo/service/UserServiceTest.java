@@ -30,7 +30,7 @@ public class UserServiceTest {
 
         Long savedId = userService.join(user);
 
-        assertEquals(user,userRepository.findOne(savedId));
+        assertEquals(user,userRepository.findById(savedId).get());
     }
 
     // 이거 통과 못한 이유가 fail 떄문인데 이유 알기 IllegalStateException은 왜 안되는걸까 어떻게 하면 통과될까

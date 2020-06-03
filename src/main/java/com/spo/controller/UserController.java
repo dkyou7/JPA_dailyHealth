@@ -17,12 +17,14 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
+    // 회원가입 페이지
     @GetMapping(value = "/users/new")
     public String createForm(Model model){
         model.addAttribute("userForm",new UserForm());
         return "users/createUserForm";
     }
 
+    // 회원가입 처리
     @PostMapping(value = "/users/new")
     public String create(@Valid UserForm form, BindingResult result){
         if(result.hasErrors()){
@@ -32,6 +34,43 @@ public class UserController {
         userService.join(user);
 
         return "redirect:/";
+    }
+
+    // 로그인 페이지
+    @GetMapping("/users/login")
+    public String dispLogin(Model model) {
+        model.addAttribute("form",new UserLoginForm());
+        return "users/login";
+    }
+
+    // 로그인 결과 페이지
+    @GetMapping("/users/login/result")
+    public String dispLoginResult() {
+        return "users/loginSuccess";
+    }
+
+    // 로그아웃 결과 페이지
+    @GetMapping("/users/logout/result")
+    public String dispLogout() {
+        return "users/logoutSuccess";
+    }
+
+    // 접근 거부 페이지
+    @GetMapping("/users/denied")
+    public String dispDenied() {
+        return "users/denied";
+    }
+
+    // 내 정보 페이지
+    @GetMapping("/users/info")
+    public String dispMyInfo() {
+        return "users/myinfo";
+    }
+
+    // 어드민 페이지
+    @GetMapping("/users/admin")
+    public String dispAdmin() {
+        return "/admin";
     }
 
     @GetMapping(value = "/users")

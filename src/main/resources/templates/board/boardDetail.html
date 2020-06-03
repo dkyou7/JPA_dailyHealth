@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/header :: header"></head>
+<link rel="stylesheet" th:href="@{/css/page/boardDetailCSS.css}" >
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
@@ -10,18 +11,19 @@
             <p th:text="${findBoard.content}"></p>
 
             <!-- 수정/삭제 -->
-            <div>
-                <p>
+            <div class="btn_list">
+                <p class="btn_list1">
                     <a class="btn btn-lg btn-info" th:href="@{'/board/edit/' + ${findBoard.id}}">
                         수정
                     </a>
-                    <form id="delete-form" th:action="@{'/board/delete/' + ${findBoard.id}}" method="post">
-                        <input type="hidden" name="_method" value="delete"/>
-                        <button class="btn btn-lg btn-info">
-                            삭제
-                        </button>
-                    </form>
                 </p>
+                <div class="btn_list3"></div>
+                <form class="btn_list2" th:action="@{'/board/delete/' + ${findBoard.id}}" method="post">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button class="btn btn-lg btn-info" disabled>
+                        삭제
+                    </button>
+                </form>
             </div>
         </div>
     <div th:replace="fragments/footer :: footer"></div>

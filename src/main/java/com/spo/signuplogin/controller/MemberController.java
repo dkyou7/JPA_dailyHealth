@@ -3,7 +3,6 @@ package com.spo.signuplogin.controller;
 import com.spo.controller.LoginForm;
 import com.spo.signuplogin.dto.MemberDto;
 import com.spo.signuplogin.service.MemberService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,11 +57,5 @@ public class MemberController {
     @GetMapping("/user/info")
     public String dispMyInfo() {
         return "myinfo";
-    }
-
-    // 어드민 페이지
-    @GetMapping("/admin")
-    public String dispAdmin() {
-        return "admin";
     }
 }
