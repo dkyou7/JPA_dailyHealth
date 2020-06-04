@@ -2,6 +2,7 @@ package com.spo.configure;
 
 import com.spo.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -41,10 +41,11 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {  // WebSec
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/users/myinfo").hasRole("MEMBER")
                 .antMatchers("/**").permitAll()
+                .antMatchers("/board/**").authenticated()
             .and() // 로그인 설정
                 .formLogin()
                 .loginPage("/users/login")
-                .successHandler(successHandler())
+                .successHandler(new SuccessHandler())
                 .defaultSuccessUrl("/users/login/result")
                 .permitAll()
             .and() // 로그아웃 설정
@@ -65,9 +66,8 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {  // WebSec
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
-
-    @Bean
-    public AuthenticationSuccessHandler successHandler() {
-        return new CustomLoginSuccessHandler("/defaultUrl");
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     }
+
 }

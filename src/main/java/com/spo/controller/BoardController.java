@@ -1,6 +1,8 @@
 package com.spo.controller;
 
+import com.spo.configure.HttpSessionUtils;
 import com.spo.domain.Board;
+import com.spo.domain.User;
 import com.spo.service.BoardService;
 import com.spo.service.UserService;
 import lombok.AllArgsConstructor;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -18,9 +21,14 @@ public class BoardController {
     private final BoardService boardService;
 
     private final UserService userService;
+
     @GetMapping("/board/new")
-    public String createForm(Model model){
-        model.addAttribute("boardForm",new BoardForm());
+    public String createForm(Model model, HttpSession session){
+        BoardForm form = new BoardForm();
+        User user = HttpSessionUtils.getUserFromSession(session);
+        System.out.println("user = " + user);
+        form.setUser(HttpSessionUtils.getUserFromSession(session));
+        model.addAttribute("boardForm",form);
         return "board/createBoardForm";
     }
 

@@ -1,5 +1,6 @@
 package com.spo.controller;
 
+import com.spo.configure.HttpSessionUtils;
 import com.spo.domain.User;
 import com.spo.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -46,15 +48,25 @@ public class UserController {
         return "users/login";
     }
 
+    @PostMapping("/users/login")
+    public String login(@Valid UserLoginForm form, BindingResult result){
+        if(result.hasErrors()){
+            return "users/login";
+        }
+        return "users/login/result";
+    }
+
     // 로그인 결과 페이지
     @GetMapping("/users/login/result")
-    public String dispLoginResult() {
+    public String dispLoginResult(HttpSession session) {
+        System.out.println("session.getAttribute(\"sessionUser\") = " + session.getAttribute("sessionUser"));
         return "users/loginSuccess";
     }
 
     // 로그아웃 결과 페이지
     @GetMapping("/users/logout/result")
-    public String dispLogout() {
+    public String dispLogout(HttpSession session) {
+        session.removeAttribute(HttpSessionUtils.USER_SESSION_KEY);
         return "users/logoutSuccess";
     }
 

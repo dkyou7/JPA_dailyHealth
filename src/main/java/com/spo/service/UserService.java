@@ -68,4 +68,9 @@ public class UserService implements UserDetailsService{
 
         return new org.springframework.security.core.userdetails.User(userEntity.getEmail(), userEntity.getPassword(), authorities);
     }
+
+    @Transactional
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email).get();
+    }
 }
